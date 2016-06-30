@@ -16,6 +16,8 @@ RCT_EXPORT_METHOD(configure:(NSArray*)scopes iosClientId:(NSString*)iosClientId 
 
   [GIDSignIn sharedInstance].scopes = scopes;
   [GIDSignIn sharedInstance].clientID = iosClientId;
+  [GIDSignIn sharedInstance].allowsSignInWithBrowser = false;
+  [GIDSignIn sharedInstance].allowsSignInWithWebView = true;
 
   if ([webClientId length] != 0) {
     [GIDSignIn sharedInstance].serverClientID = webClientId;
