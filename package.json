@@ -1,6 +1,6 @@
 {
   "name": "react-native-google-signin",
-  "version": "0.6.1",
+  "version": "0.8.0",
   "description": "Google Signin for your react native applications",
   "main": "index",
   "scripts": {
@@ -28,6 +28,17 @@
   },
   "bugs": {
     "url": "https://github.com/devfd/react-native-google-signin/issues"
+  },
+  "rnpm": {
+    "ios": {
+      "project": "ios/RNGoogleSignin.xcodeproj",
+      "sharedLibraries": [
+        "libz",
+        "SafariServices",
+        "SystemConfiguration",
+        "AddressBook"
+      ]
+    }
   },
   "homepage": "https://github.com/devfd/react-native-google-signin",
   "license": "MIT"

@@ -15,6 +15,8 @@
 npm install react-native-google-signin --save
 ```
 
+**Warning**: For `react-native` >= v0.30 use `react-native-google-signin` >= v0.8.0
+
 ## Project setup and initialization
 
 See [Android guide](android-guide.md) and [iOS guide](ios-guide.md)
@@ -22,7 +24,7 @@ See [Android guide](android-guide.md) and [iOS guide](ios-guide.md)
 
 ## Public API
 
-### GoogleSigninButton
+### 1. GoogleSigninButton
 
 [![signin button](img/signin-button.png)](#button)
 
@@ -49,9 +51,13 @@ Possible value for ```color``` are:
 - Color.Light: apply a light gray background
 
 
-### GoogleSignin
+### 2. GoogleSignin
 
-#### hasPlayServices
+```js
+import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
+```
+
+####  - hasPlayServices
 Check if device has google play services installed. Always return true on iOS.
 ```js
 GoogleSignin.hasPlayServices({ autoResolve: true }).then(() => {
@@ -67,8 +73,8 @@ when ```autoResolve``` the library will prompt the user to take action to solve 
 For example if the play services are not installed it will prompt:
 [![prompt install](img/prompt-install.png)](#prompt-install)
 
-#### configure
-It is mandatory to call this method before any others.
+#### - configure
+It is mandatory to call this method before login.
 
 Example for default configuration. you get user email and basic profile info.
 ```js
@@ -98,7 +104,7 @@ GoogleSignin.configure({
 
 **iOS Note**: your app ClientID (```iosClientId```) is always required
 
-#### currentUserAsync
+#### - currentUserAsync
 Typically called on the ```componentDidMount``` of your main component. This method give you the current user if already login or null if not yet signin.
 
 ```js
@@ -108,14 +114,14 @@ GoogleSignin.currentUserAsync().then((user) => {
     }).done();
 ```
 
-#### currentUser
+#### - currentUser
 simple getter to access user once signed in.
 ```js
 const user = GoogleSignin.currentUser();
 // user is null if not signed in
 ```
 
-#### signIn
+#### - signIn
 Prompt the modal to let the user signin into your application
 ```js
 GoogleSignin.signIn()
@@ -129,9 +135,23 @@ GoogleSignin.signIn()
 .done();
 ```
 
+#### - getAccessToken (Android Only)
+Obtain the user access token. 
+
+```js
+GoogleSignin.getAccessToken()
+.then((token) => {
+  console.log(token);
+})
+.catch((err) => {
+  console.log(err);
+})
+.done();
+```
+
 **iOS Note**: an error with code ```-5``` is returned if the user cancels the signin process
 
-#### signOut
+#### - signOut
 remove user session from the device
 ```js
 GoogleSignin.signOut()
@@ -145,7 +165,7 @@ GoogleSignin.signOut()
 
 **iOS Note**: the signOut method does not return any event. you success callback will always be called.
 
-#### revokeAccess
+#### - revokeAccess
 remove your application from the user authorized applications
 ```js
 GoogleSignin.revokeAccess()
@@ -156,7 +176,7 @@ GoogleSignin.revokeAccess()
 
 })
 ```
-### User
+### 3. User
 
 This is the typical information you obtain once the user sign in:
 ```
@@ -168,9 +188,11 @@ This is the typical information you obtain once the user sign in:
     idToken: <token to authenticate the user on the backend>
     serverAuthCode: <one-time token to access Google API from the backend on behalf of the user>
     scopes: <list of authorized scopes>
-    accessToken: <needed to access google API from the application>
+    accessToken: <needed to access google API from the application> (iOS only)
   }
 ```
+
+**Android Note**: To obtain the user accessToken call `getAccessToken`
 
 **idToken Note**: idToken is not null only if you specify a valid ```webClientId```. ```webClientId``` corresponds to your server clientID on the developers console. It **HAS TO BE** of type **WEB**
 
