@@ -3,8 +3,6 @@
 [![xcode config](https://github.com/apptailor/react-native-google-signin/raw/master/img/demo-app.gif)](#demo)
 
 ## Features
-- Support rn 0.4
-
 - Support all 3 types of authentication methods (standard, with server-side validation or with offline access (aka server side access))
 - Native signin button
 - Consistent API between Android and iOS
